@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>好会计前端发布</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="javascripts/socket.io.js"></script>
+</head>
+<body>
+<form action="" id="formPut">
+    <div class="wrap">
+        <h3>前端版本发布平台</h3>
+        <div class="formControl">
+            <input type="text" placeholder="请输入版本号" name="version" id="version" value="1.0.37">
+        </div>
+        <div class="formControl">
+            <input type="text" placeholder="请输入git分支" name="gitbranch" id="gitbranch" value="develop">
+        </div>
+        <div class="remarks">
+
+        </div>
+        <input type="button" value="确认" class="submit" id="submit">
+    </div>
+    <div class="process_script" id="processScript">
+        1.由于操作DOM性能消耗太大,暂时未想出好的解决方式,可以打开F12 在Console里面查看细节 <br>
+        2.暂不支持低版本浏览器
+    </div>
+
+</form>
+<script>
+    window.onload = function(){
+        var socket = io(location.href);
+        var str = '';
+        var formPut = document.getElementById('formPut');
+        var submitBut = document.getElementById('submit');
+        var processScript = document.getElementById('processScript');
+        submitBut.addEventListener('click',function(){
+            var version = document.getElementById('version').value;
+            var gitbranch = document.getElementById('gitbranch').value;
+            console.log(version);
+            if(!version){
+                showTip('请输入版本号');
+                return;
+            }
+            if(!gitbranch){
+                showTip('请输入git分支号');
+                return;
+            }
+            socket.emit('start build', {
+                "version":version,
+                "gitbranch":gitbranch
+            });
+        });
+
+        socket.on('start', function(msg){
+            clearMsg();
+            appendMsg(msg);
+        });
+        socket.on('error', function(msg){
+            clearMsg();
+            appendMsg(msg);
+        });
+        socket.on('close', function(msg){
+            clearMsg()
+            appendMsg('编译完成');
+        });
+
+        socket.on('get Process', function(msg){
+            //appendMsg(msg);
+            console.log(msg);
+        });
+
+        socket.on('queue', function(msg){
+            //appendMsg(msg);
+            clearMsg()
+            appendMsg(msg);
+        });
+
+
+        function appendMsg(message) {
+            str += message;
+            //避免过多的操作dom
+            processScript.innerHTML = str;
+        }
+
+        function clearMsg() {
+            str = '';
+            processScript.innerHTML = str;
+        }
+
+    }
+</script>
+</body>
+</html>
