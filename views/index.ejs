@@ -11,10 +11,14 @@
     <div class="wrap">
         <h3>前端版本发布平台</h3>
         <div class="formControl">
-            <input type="text" placeholder="请输入版本号" name="version" id="version" value="1.0.37">
+            <input type="text" placeholder="请输入版本号" name="version" id="version" value="1.0.37" class="inputGroup">
         </div>
         <div class="formControl">
-            <input type="text" placeholder="请输入git分支" name="gitbranch" id="gitbranch" value="develop">
+            <select name="gitbranch" id="gitbranch" class="inputGroup selectGroup">
+                <% for(var i=0; i<branchList.length; i++) {%>
+                <option value="<%= branchList[i] %>"><%= branchList[i] %></option>
+                <% } %>
+            </select>
         </div>
         <div class="remarks">
 
@@ -37,7 +41,7 @@
         submitBut.addEventListener('click',function(){
             var version = document.getElementById('version').value;
             var gitbranch = document.getElementById('gitbranch').value;
-            console.log(version);
+            console.log(version +'  '+gitbranch);
             if(!version){
                 showTip('请输入版本号');
                 return;

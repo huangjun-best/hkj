@@ -1,11 +1,43 @@
 var express = require('express');
-
 var router = express.Router();
+var git = require('../func/gitCommand');
+var branchList = '';
+git.branchAll("/var/www/hkj/publish/", function (err,str) {
+  if(err){
+    console.log(err);
+    return;
+  }
+  branchList = splitArr(str.split(' '));
+  console.log(branchList);
+});
 //var process = require('child_process');
+function splitArr(arr){
+  var emptyArr = [];
+  arr.forEach(function(v,k){
+    v = v.replace('origin/','');
+    if(v && v != '->' && v != 'HEAD'){
+      if(!inArray(v, emptyArr)){
+        emptyArr.push(v);
+      }
+    }
+  });
+  return emptyArr;
+}
+
+function inArray(str, arr){
+  var count = 0;
+  arr.forEach(function(v,k){
+    if(str == v){
+      count++;
+    }
+  });
+  return !!count;
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  // cosole.log(git);
+  res.render('index', { branchList: branchList });
 });
 
 router.post('/build', function(req, res, next) {

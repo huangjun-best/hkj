@@ -9,13 +9,17 @@
 .formControl{
   margin:10px 0;
 }
-.formControl input{
+.formControl .inputGroup{
   width:300px;
   height:30px;
   line-height: 30px;
-  padding:5px;
+  padding:0 5px;
   border:1px solid #ccc;
   border-radius: 5px;;
+}
+.formControl .selectGroup{
+  width:312px;
+  height:32px;
 }
 .submit{
   outline: none;

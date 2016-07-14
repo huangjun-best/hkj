@@ -17,18 +17,19 @@ git reset --hard
 git checkout ${gitBranch}
 git pull origin ${gitBranch}
 git status
-echo "git pull over"
+echo "git pull ${gitBranch} done"
 
 mkdir -p ${BASEDIR}/${cdnVer}/
 DISTDIR="$BASEDIR/$cdnVer/"
 
 #更新build版本号
 sed -i 's/\(cdnVer=\).*/\1"'"${cdnVer}"'"/' build.sh
-echo "update version"
+echo "update version done"
 sh build.sh
 
+echo "start clear target file"
 rm -rf "${TARGETDIR}${cdnVer}"
 echo "clear done"
 #删除开发目录当前版本号
 mv -f ${cdnVer} ${TARGETDIR}
-echo "copy over"
+echo "copy done"
