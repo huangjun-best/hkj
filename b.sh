@@ -14,6 +14,8 @@ gitBranch=$2
 cd ${BASEDIR}
 pwd
 git reset --hard
+git clean -df
+echo "git reset clean done"
 git checkout ${gitBranch}
 git pull origin ${gitBranch}
 git status
