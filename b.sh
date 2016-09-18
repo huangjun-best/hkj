@@ -2,10 +2,10 @@
 
 #工程目录
 #BASEDIR="/Users/huangjun/chanjet/hkj/chanjet_hkj_js"
-BASEDIR="/var/www/hkj/publish/"
+BASEDIR="/opt/C7649/webapps/hkj/publish"
 #开发目录
 #TARGETDIR="/Users/huangjun/chanjet/accounting"
-TARGETDIR="/var/www/accounting/"
+TARGETDIR="/opt/C7649/webapps/accounting/"
 SRCDIR="$BASEDIR/src"
 #版本号
 cdnVer=$1
