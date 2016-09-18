@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var git = require('../func/gitCommand');
 var branchList = '';
-git.branchAll("/var/www/hkj/publish/", function (err,str) {
+git.branchAll("/opt/C7649/webapps/hkj/publish/", function (err,str) {
   if(err){
     console.log(err);
     return;
@@ -51,6 +51,7 @@ router.post('/build', function(req, res, next) {
     res.send('git分支号不能为空');
   }
   var execStr = 'sh ./b.sh ' + version + ' ' + gitbranch;
+    console.log(execStr);
 
   // process.exec(execStr, function (error, stdout, stderr) {
   //   if (error !== null) {
